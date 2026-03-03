@@ -653,6 +653,22 @@ public class InventoryTransactionController : BaseApiController
             Content = response
         });
     }
+    [Authorize]
+    [HttpGet("GetStockSummaryReport")]
+    public async Task<ActionResult<ApiSuccessResult<GetStockSummaryReportResult>>> GetStockSummaryReportAsync(
+        CancellationToken cancellationToken
+        )
+    {
+        var request = new GetStockSummaryReportRequest { };
+        var response = await _sender.Send(request, cancellationToken);
+
+        return Ok(new ApiSuccessResult<GetStockSummaryReportResult>
+        {
+            Code = StatusCodes.Status200OK,
+            Message = $"Success executing {nameof(GetStockSummaryReportAsync)}",
+            Content = response
+        });
+    }
 
 }
 

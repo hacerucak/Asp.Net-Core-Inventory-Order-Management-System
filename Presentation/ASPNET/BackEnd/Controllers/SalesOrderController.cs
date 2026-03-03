@@ -110,6 +110,24 @@ public class SalesOrderController : BaseApiController
             Content = response
         });
     }
+    [Authorize]
+    [HttpGet("GetSalesSummaryReport")]
+    public async Task<ActionResult<ApiSuccessResult<GetSalesSummaryReportResult>>> GetSalesSummaryReportAsync(
+        CancellationToken cancellationToken,
+        [FromQuery] DateTime? startDate = null,
+        [FromQuery] DateTime? endDate = null
+        )
+    {
+        var request = new GetSalesSummaryReportRequest { StartDate = startDate, EndDate = endDate };
+        var response = await _sender.Send(request, cancellationToken);
+
+        return Ok(new ApiSuccessResult<GetSalesSummaryReportResult>
+        {
+            Code = StatusCodes.Status200OK,
+            Message = $"Success executing {nameof(GetSalesSummaryReportAsync)}",
+            Content = response
+        });
+    }
 
 }
 
